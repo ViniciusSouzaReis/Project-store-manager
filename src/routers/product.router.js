@@ -1,5 +1,6 @@
 const express = require('express');
 const productsModel = require('../models/products.model');
+const validadateProduct = require('../middlewares/validateAddProducts');
 
 const router = express.Router();
 
@@ -21,15 +22,14 @@ router.get('/:id', async (req, res) => {
   return res.status(404).json({ message: 'Product not found' });
 });
 
-router.post('/', async (req, res) => {
+router.post('/', validadateProduct, async (req, res) => {
   const { name } = req.body;
-  const getAll = await await productsModel.findAll();
-  await productsModel.insert(name);
-  const addProduct = {
-    id: getAll.length + 1,
+  const addProduct = await productsModel.insert(name);
+  const addProductReturn = {
+    id: addProduct,
     name,
   };
-  return res.status(201).json(addProduct);
+  return res.status(201).json(addProductReturn);
 });
 
 module.exports = router;
