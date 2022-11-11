@@ -21,4 +21,15 @@ router.get('/:id', async (req, res) => {
   return res.status(404).json({ message: 'Product not found' });
 });
 
+router.post('/', async (req, res) => {
+  const { name } = req.body;
+  const getAll = await await productsModel.findAll();
+  await productsModel.insert(name);
+  const addProduct = {
+    id: getAll.length + 1,
+    name,
+  };
+  return res.status(201).json(addProduct);
+});
+
 module.exports = router;
