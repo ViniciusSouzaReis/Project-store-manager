@@ -11,6 +11,17 @@ const allProducts = [
     "id": 3,
     "name": "Escudo do Capitão América"
   }
-]
+];
 
-module.exports = allProducts;
+const allProductsUpdated = [
+  {
+    "id": 1,
+    "name": "Martelo do Batman",
+  },
+  undefined,
+];
+
+module.exports = {
+  allProducts,
+  allProductsUpdated,
+};

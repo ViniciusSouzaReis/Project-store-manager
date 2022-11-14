@@ -5,7 +5,7 @@ const sinon = require('sinon');
 
 
 const productsModel = require('../../../src/models/products.model');
-const allProducts = require('./mocks/allProducts.model.mock');
+const {allProducts, allProductsUpdated} = require('./mocks/allProducts.model.mock');
 
 const app = require('../../../src/app');
 const connection = require('../../../src/database/connection');
@@ -98,5 +98,58 @@ describe('Testando os endpoints de products', function () {
       deep.equal({
         "message": "\"name\" length must be at least 5 characters long"
       });
+  });
+
+  it('Testando a alteração de uma produto com o id 1', async function () {
+    sinon.stub(connection, 'execute').resolves([[allProducts[1]]]);
+    const response = await chai
+      .request(app)
+      .put('/products/1')
+      .send(
+        {
+          "name": "Martelo do Batman"
+        }
+      );
+
+    expect(response.status).to.equal(200);
+    expect(response.body).to
+      .deep.equal({
+        "id": "1",
+        "name": "Martelo do Batman"
+      });
+  });
+
+  it('Testando a alteração de uma produto com o id errado', async function () {
+    sinon.stub(connection, 'execute').resolves([[allProductsUpdated[1]]]);
+    const response = await chai
+      .request(app)
+      .put('/products/4')
+      .send(
+        {
+          "name": "Martelo do Batman"
+        }
+      );
+
+    expect(response.status).to.equal(404);
+    expect(response.body).to.deep.equal({
+      "message": "Product not found"
+    });
+  });
+
+  it('Testando a alteração de uma produto com o body incorreto', async function () {
+    sinon.stub(connection, 'execute').resolves([[allProductsUpdated]]);
+    const response = await chai
+      .request(app)
+      .put('/products/1')
+      .send(
+        {
+          "name": "Mar"
+        }
+      );
+
+    expect(response.status).to.equal(422);
+    expect(response.body).to.deep.equal({
+      "message": "\"name\" length must be at least 5 characters long"
+    });
   });
 });
