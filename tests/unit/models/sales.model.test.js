@@ -24,15 +24,4 @@ describe('Testando os endpoints de sales', function () {
     expect(response.status).to.equal(200);
     expect(response.body).to.deep.equal(allSalesDB);
   });
-
-  it('Testando a listagem de sales por id', async function () {
-    sinon.stub(connection, 'execute').resolves([idSalesDb]);
-    const response = await chai
-      .request(app)
-      .get('/sales/1')
-
-
-    expect(response.status).to.equal(200);
-    expect(response.body).to.deep.equal(idSalesDb);
-  });
 });
