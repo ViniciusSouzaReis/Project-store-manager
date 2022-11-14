@@ -13,14 +13,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  const idProduct = await productsModel.findById(id);
-  if (idProduct) {
-    return res.status(200).json(idProduct);
-  }
-  return res.status(404).json({ message: 'Product not found' });
-});
+router.get('/:id', validadateProduct.checkId);
 
 router.post('/', validadateProduct.createProduct);
 

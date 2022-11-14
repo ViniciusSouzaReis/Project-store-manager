@@ -14,9 +14,9 @@ const checkId = async (req, res) => {
   const { id } = req.params;
   const { type, message } = await productsService.doesProductExist(id);
 
-  if (!type) return res.status(type).json({ message });
+  if (type === 'INVALID_ERROR') return res.status(404).json({ message: 'Product not found' });
 
-  return res.status(type).json({ message });
+  return res.status(200).json(message);
 };
 
 module.exports = {

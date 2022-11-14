@@ -23,9 +23,24 @@ describe('Testando os endpoints de products', function () {
 
   it('Testando a listagem da produtos com id 1', async function () {
     sinon.stub(connection, 'execute').resolves([[allProducts[0]]]);
-    const result = await productsModel.findById();
+    const response = await chai
+      .request(app)
+      .get('/products/1');
 
-    expect(result).to.deep.equal(allProducts[0]);
+    expect(response.status).to.equal(200);
+    expect(response.body).to.deep.equal(allProducts[0]);
+  });
+
+  it('Testando a listagem da produtos com id errado', async function () {
+    sinon.stub(connection, 'execute').resolves([[allProducts[4]]]);
+    const response = await chai
+      .request(app)
+      .get('/products/4');
+
+    expect(response.status).to.equal(404);
+    expect(response.body).to.deep.equal({
+      "message": "Product not found"
+    });
   });
 
   it('Testando o cadastro de uma pessoa ', async function () {

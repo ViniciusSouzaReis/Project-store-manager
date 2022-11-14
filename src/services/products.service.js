@@ -3,8 +3,9 @@ const validationProduct = require('./validations/validationsProduct');
 
 const doesProductExist = async (id) => {
   const product = await productsModels.findById(id);
-  if (product) return { type: '', message: product };
-  return { type: 404, message: 'Product not found' };
+  console.log(product);
+  if (!product) return { type: 'INVALID_ERROR', message: 'Product not found' };
+  return { type: '', message: product };
 };
 
 const saveProduct = async (name) => {
