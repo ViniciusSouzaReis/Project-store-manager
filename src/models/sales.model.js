@@ -1,14 +1,15 @@
 const connection = require('../database/connection');
 
-const insertIntoSaleProducts = async (product, id) => {
+const insertIntoSaleProducts = async (product, saleId) => {
   const { productId, quantity } = product;
-  await connection.execute(
+  connection.execute(
     'INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity) VALUES(?, ?, ?)',
-    [id, productId, quantity],
+    [saleId, productId, quantity],
   );
 };
 
 const insertNewSale = async (products) => {
+  console.log(products);
   const [{ insertId }] = await connection.execute(
     'INSERT INTO StoreManager.sales (date) VALUE (now())',
   );
@@ -17,5 +18,6 @@ const insertNewSale = async (products) => {
 };
 
 module.exports = {
+  insertIntoSaleProducts,
   insertNewSale,
 };
