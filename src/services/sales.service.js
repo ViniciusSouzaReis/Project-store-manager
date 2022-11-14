@@ -44,6 +44,15 @@ const responseObject = async (body) => {
   return checkValidation;
 };
 
+const checkSaleId = async (id) => {
+  const checkReturn = await salesModel.findById(id);
+  if (checkReturn.length < 1) {
+    return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
+  }
+  return { type: '', message: checkReturn };
+};
+
 module.exports = {
   responseObject,
+  checkSaleId,
 };

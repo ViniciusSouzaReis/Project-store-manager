@@ -29,10 +29,23 @@ const findAll = async () => {
   return result;
 };
 
-findAll();
+const findById = async (id) => {
+  const [result] = await connection.execute(
+    `
+    SELECT sales.date, sales_products.product_id as productId, sales_products.quantity
+    FROM sales_products
+    INNER JOIN sales
+    ON sales.id = sales_products.sale_id
+    WHERE sales_products.sale_id = ?
+    ORDER BY sales_products.sale_id, sales_products.product_id`,
+    [id],
+  );
+  return result;
+};
  
 module.exports = {
   insertIntoSaleProducts,
   insertNewSale,
   findAll,
+  findById,
 };
