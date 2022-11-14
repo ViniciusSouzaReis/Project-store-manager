@@ -35,5 +35,4 @@ describe('Testando os endpoints de sales', function () {
     expect(response.status).to.equal(200);
     expect(response.body).to.deep.equal(idSalesDb);
   });
-  afterEach(sinon.restore);
 });
