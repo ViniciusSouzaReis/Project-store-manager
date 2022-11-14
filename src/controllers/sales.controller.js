@@ -6,7 +6,7 @@ const createNewSales = async (req, res) => {
 
   if (!type) return res.status(201).json(message);
 
-  return res.status(type).json(message);
+  return res.status(type).json({ message });
 };
 
 module.exports = {

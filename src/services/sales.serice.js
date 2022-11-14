@@ -7,15 +7,15 @@ const saveSales = async (body) => {
 };
 
 const checkIfCanSave = async (body) => {
-  const validationId = validationSales.validateId(body);
-  const validationIdExists = validationSales.checkIfIdExists(body);
-  const validationQuantity = validationSales.validateQuantity(body);
+  const validationId = await validationSales.validateId(body);
+  const validationIdExists = await validationSales.checkIfIdExists(body);
+  const validationQuantity = await validationSales.validateQuantity(body);
 
   if (validationId.type) {
     return { type: 400, message: validationId.message };
   }
 
-  if (validationIdExists.type) {
+  if (validationIdExists.type === 'ID_NOT_FOUND') {
     return { type: 404, message: validationIdExists.message };
   }
 
