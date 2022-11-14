@@ -16,7 +16,7 @@ describe('Testando os endpoints de sales', function () {
   afterEach(sinon.restore);
 
   it('Testando o registro de um produto ', async function () {
-    sinon.stub(connection, 'execute').resolves([{ insertId: 4 }]);
+    sinon.stub(connection, 'execute').resolves(true);
 
     const response = await chai
       .request(app)
@@ -52,7 +52,7 @@ describe('Testando os endpoints de sales', function () {
   });
 
   it('Testando falha no cadastro sem productId ', async function () {
-    sinon.stub(connection, 'execute').resolves([{ insertId: 4 }]);
+    sinon.stub(connection, 'execute').resolves(true);
 
     const response = await chai
       .request(app)
@@ -76,7 +76,7 @@ describe('Testando os endpoints de sales', function () {
   });
 
   it('Testando falha no cadastro sem quantity ', async function () {
-    sinon.stub(connection, 'execute').resolves([{ insertId: 4 }]);
+    sinon.stub(connection, 'execute').resolves(true);
 
     const response = await chai
       .request(app)
@@ -100,7 +100,7 @@ describe('Testando os endpoints de sales', function () {
   });
 
   it('Testando falha no cadastro produto inexistente ', async function () {
-    sinon.stub(connection, 'execute').resolves([allProducts]);
+    sinon.stub(connection, 'execute').resolves(true);
 
     const response = await chai
       .request(app)
@@ -123,7 +123,7 @@ describe('Testando os endpoints de sales', function () {
   });
 
   it('Testando falha no cadastro sem quantity maior que 0 ', async function () {
-    sinon.stub(connection, 'execute').resolves([{ insertId: 4 }]);
+    sinon.stub(connection, 'execute').resolves(true);
 
     const response = await chai
       .request(app)

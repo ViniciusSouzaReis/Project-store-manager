@@ -18,9 +18,14 @@ const insertNewSale = async (products) => {
 
 const findAll = async () => {
   const [result] = await connection.execute(
-    'SELECT * FROM StoreManager.sales',
+    `
+    SELECT sales_products.sale_id as saleId, sales.date, sales_products.product_id as productId, 
+    sales_products.quantity
+    FROM sales_products
+    INNER JOIN sales
+    ON sales.id = sales_products.sale_id
+    ORDER BY sales_products.sale_id, sales_products.product_id;`,
   );
-  console.log(result);
   return result;
 };
 
@@ -29,4 +34,5 @@ findAll();
 module.exports = {
   insertIntoSaleProducts,
   insertNewSale,
+  findAll,
 };
